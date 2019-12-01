@@ -1,0 +1,468 @@
+
+知书阅读：
+  ssh root@xxxxx
+
+csdn
+safhiowfioesgueignej    zch-
+
+------------创建FTP
+1、安装vsftpd   
+sudo yum -y install vsftpd
+sudo mkdir ftpfile
+ 
+ sudo useradd ftpuser -d /ftpfile/ -s /sbin/nologin
+sudo chown -R ftpuser.ftpuser /ftpfile
+ll |grep ftp
+sudo passwd ftpuser
+
+
+
+（9）关闭防火墙
+
+service iptables stop
+service ip6tables stop
+chkconfig iptables off
+chkconfig ip6tables off
+
+vi /etc/selinux/config
+SELINUX=disabled
+
+关闭windows的防火墙
+
+2、在每个CentOS中都安装Java和Perl
+
+WinSCP，就是在windows宿主机和linux虚拟机之间互相传递文件的一个工具
+
+（1）安装JDK
+
+1、将jdk-7u60-linux-i586.rpm通过WinSCP上传到虚拟机中
+2、安装JDK：rpm -ivh jdk-7u65-linux-i586.rpm
+3、配置jdk相关的环境变量
+vi .bashrc
+export JAVA_HOME=/usr/java/latest
+export PATH=$PATH:$JAVA_HOME/bin
+source .bashrc
+4、测试jdk安装是否成功：java -version
+
+（2）安装Perl
+
+很多讲师，拿着自己之前花了很多时间调试好的虚拟机环境，去讲课，这个很不负责任
+
+yum install -y gcc
+
+wget http://www.cpan.org/src/5.0/perl-5.16.1.tar.gz
+tar -xzf perl-5.16.1.tar.gz
+cd perl-5.16.1
+./Configure -des -Dprefix=/usr/local/perl
+make && make test && make install
+perl -v
+
+
+/usr/servers
+
+
+
+添加ftp用户  ylmcftp   密码： ylmc@2019
+
+ftp 47.112.27.156
+
+ps -ef | grep java
+ps -eaf | grep tomcat
+
+-------vsftp
+ps -ef | grep ftp  
+
+winscp  ftp 连接服务器   ： 服务器主动拒绝
+通过查询是vsftpd服务是否存在
+sudo service vsftpd status
+sudo service vsftpd start
+......
+......
+
+sudo vim /etc/selinux/config
+
+
+--------------- 安装JDK
+1、rpm -qa|grep jdk
+2、sudo vim /etc/profile
+3、source  /etc/profile
+------------------
+--------------- 安装tomcat
+1 将tgz文件解压到指定目录
+tar zxvf test.tgz -C 指定目录
+比如将/source/kernel.tgz解压到 /source/linux-2.6.29 目录
+tar zxvf /source/kernel.tgz -C /source/ linux-2.6.29
+
+tar -zxvf 
+mv apache-tomcat-7.0.73 ../
+1、sudo vim /etc/profile
+sudo vim  /devloper/apache-tomcat-7.0.73/conf/server.xml
+/developer/apache-tomcat-7.0.73/webapps
+
+ cd /developer/apache-tomcat-7.0.73/bin
+  /developer/apache-tomcat-7.0.7/bin/startup.sh
+
+1、 cd /developer/apache-tomcat-7.0.73/logs
+tail -f catalina.out
+
+1，按照时间升序
+ls -lrt
+
+2，按照时间降序（最新修改的排在前面）
+命令:ls -lt
+
+/developer/apache-tomcat-7.0.73/webapps/mallupload
+cd /ftpfile/
+cp  -r  mallupload  /ftpfile/
+
+ cp /product/ftpfile/mallweb.war /developer/apache-tomcat-7.0.73/webapps/ROOT.war
+ cp /product/ftpfile/mallweb.war /devloper/apache-tomcat-7.0.73/webapps1/
+
+
+ cp /product/ftpfile/mallweb.war /developer/apache-tomcat-7.0.73/webapps/
+
+cp /ftpfile/mallapp.war /devloper/apache-tomcat-7.0.73/webapps1/
+cp 
+
+/developer/apache-tomcat-7.0.73/conf/Catalina/localhost
+
+cp /product/ftpfile/MP_verify_5zk7VRJRaUHSkBgx.txt  /devloper/apache-tomcat-7.0.73/webapps/mallweb
+
+ mv mallweb  web/
+
+ /home/apps/web/mallweb
+cp /product/ftpfile/mallweb.war   /home/apps/web/mallweb
+
+/devloper/apache-tomcat-7.0.73/webapps/mallupload
+
+ /home/apps/web/picfile
+
+/home/apps/web/mallapp
+cp /product/ftpfile/mallapp.war   /home/apps/web/
+
+workDir="/home/apps/web/mallweb">
+
+:noh
+tomcat  无法shutdown.sh 解决：
+
+修改其子目录 /jre/lib/security/ 下的 “java.security” 文件中的 “securerandom.source=file:/dev/random” 为 “securerandom.source=file:/dev/./urandom “
+
+/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/jre/lib/security
+
+/usr/java/jdk1.7.0_80/jre/lib/security
+
+https://blog.csdn.net/qq_31772441/article/details/80472968
+
+
+进入Tomcat中的/bin/catalina.sh 
+在catalina.sh中添加如下代码： 
+
+#此处为添加代码
+JAVA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=256m -XX:PermSize=512m -XX:MaxPermSize=512m"
+
+添加的位置：echo"Using CATALINA_BASE"之前的一行。
+
+
+--------------- 安装nginx
+yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel 
+
+sudo vim  /usr/local/nginx/conf/nginx.conf
+
+cd /home/softwares
+wget http://nginx.org/download/nginx-1.15.7.tar.gz
+tar -zxvf nginx-1.15.7.tar.gz -C /home/
+cd /home/nginx-1.15.7/
+./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-pcre
+make
+make install
+
+[root@localhost ~]# /usr/local/nginx/sbin/nginx   启动
+[root@localhost ~]# /usr/local/nginx/sbin/nginx -s stop  停止
+[root@localhost ~]# /usr/local/nginx/sbin/nginx -s reload  重新载入
+[root@localhost ~]# /usr/local/nginx/sbin/nginx -v  查看版本
+[root@localhost ~]# /usr/local/nginx/sbin/nginx -t  测试配置文件是否正常
+
+
+ cd /usr/local/nginx/sbin/
+ sudo ./nginx   启动
+
+ ps -ef | grep nginx
+ sudo kill -QUIT 1844
+
+ sudo kill -QUIT 15425
+强制停止Nginx：
+kill -9 主进程号 
+
+4.全局查找与nginx相关的文件
+sudo find / -name nginx*
+
+https://www.jianshu.com/p/439cd2a7c84e
+--------ssl模块 配置
+cd /usr/local/nginx/sbin/
+sudo ./nginx -s reload  重启
+
+/usr/local/nginx/conf/cert
+
+-----------------项目发布------------
+ cp /product/ftpfile/mysql-connector-java-5.1.6-bin.jar /devloper/apache-tomcat-7.0.73/lib
+
+ cp /product/ftpfile/mallweb.war /devloper/apache-tomcat-7.0.73/webapps/ROOT.war
+查看tomcat报错信息：
+1、 cd /devloper/apache-tomcat-7.0.73/logs
+tail -f catalina.out
+
+
+tail -f  logs/mmall.log
+less  catalina.out
+
+
+3 tomcat配置文件
+server_mallweb.xml  
+后台
+图片 在服务器先建立个文件夹 比如sucaihuo ，然后把mallupload 放进去
+/home/apps/web/sucaihuo/mallupload
+		<Context docBase="/home/apps/web/mallweb" path="/mallweb" reloadable="true"/>
+		<Context docBase="/home/apps/web/picfile" path="/mallupload" reloadable="true"/>
+
+
+-------------------------  灰度发布
+（1）安装JDK
+
+1、将jdk-7u60-linux-i586.rpm通过WinSCP上传到虚拟机中
+2、安装JDK：rpm -ivh jdk-7u65-linux-i586.rpm
+3、配置jdk相关的环境变量
+vi .bashrc
+export JAVA_HOME=/usr/java/latest
+export PATH=$PATH:$JAVA_HOME/bin
+source .bashrc
+4、测试jdk安装是否成功：java -version
+
+（2）安装Perl
+
+很多讲师，拿着自己之前花了很多时间调试好的虚拟机环境，去讲课，这个很不负责任
+
+yum install -y gcc
+
+wget http://www.cpan.org/src/5.0/perl-5.16.1.tar.gz
+tar -xzf perl-5.16.1.tar.gz
+cd perl-5.16.1
+./Configure -des -Dprefix=/usr/local/perl
+make && make test && make install
+perl -v
+
+
+（1）部署openresty
+
+mkdir -p /usr/servers  
+cd /usr/servers/
+
+yum install -y readline-devel pcre-devel openssl-devel gcc
+
+wget http://openresty.org/download/ngx_openresty-1.7.7.2.tar.gz  
+tar -xzvf ngx_openresty-1.7.7.2.tar.gz  
+cd /usr/servers/ngx_openresty-1.7.7.2/
+
+cd bundle/LuaJIT-2.1-20150120/  
+make clean && make && make install  
+ln -sf luajit-2.1.0-alpha /usr/local/bin/luajit
+
+cd bundle  
+wget https://github.com/FRiCKLE/ngx_cache_purge/archive/2.3.tar.gz  
+tar -xvf 2.3.tar.gz  
+
+   /usr/servers/ngx_openresty-1.7.7.2/bundle
+
+cd bundle  
+wget https://github.com/yaoweibin/nginx_upstream_check_module/archive/v0.3.0.tar.gz  
+tar -xvf v0.3.0.tar.gz  
+
+cd /usr/servers/ngx_openresty-1.7.7.2  
+./configure --prefix=/usr/servers --with-http_realip_module  --with-pcre  --with-luajit --add-module=./bundle/ngx_cache_purge-2.3/ --add-module=./bundle/nginx_upstream_check_module-0.3.0/ -j2  
+make && make install 
+
+cd /usr/servers/  
+ll
+
+/usr/servers/luajit
+/usr/servers/lualib
+/usr/servers/nginx
+/usr/servers/nginx/sbin/nginx -V 
+
+启动nginx: /usr/servers/nginx/sbin/nginx
+
+（2）nginx+lua开发的hello world
+
+vi /usr/servers/nginx/conf/nginx.conf
+
+在http部分添加：
+
+lua_package_path "/usr/servers/lualib/?.lua;;";  
+lua_package_cpath "/usr/servers/lualib/?.so;;";  
+
+/usr/servers/nginx/conf下，创建一个lua.conf
+
+server {  
+    listen       80;  
+    server_name  _;  
+}  
+
+在nginx.conf的http部分添加：
+
+include lua.conf;
+
+验证配置是否正确：
+
+/usr/servers/nginx/sbin/nginx -t
+
+在lua.conf的server部分添加：
+
+location /lua {  
+    default_type 'text/html';  
+    content_by_lua 'ngx.say("hello world")';  
+} 
+
+/usr/servers/nginx/sbin/nginx -t  
+
+重新nginx加载配置
+
+/usr/servers/nginx/sbin/nginx -s reload  
+
+访问http: http://192.168.31.187/lua
+
+vi /usr/servers/nginx/conf/lua/test.lua
+
+ngx.say("hello world"); 
+
+修改lua.conf
+
+location /lua {  
+    default_type 'text/html';  
+    content_by_lua_file conf/lua/test.lua; 
+}
+
+查看异常日志
+
+tail -f /usr/servers/nginx/logs/error.log
+
+
+
+/mginx/conf/lua.conf
+
+upstream java_prod { 
+    server 192.168.56.12:8080; 
+} 
+upstream java_test { 
+    server 192.168.56.13:9090; 
+} 
+server { 
+     listen 80; 
+     server_name 47.104.250.169; 
+     location /hello { 
+             default_type 'text/plain'; 
+	     content_by_lua 'ngx.say("hello ,lua scripts")'; 
+      }
+      
+      location /myip { 
+      default_type 'text/plain'; 
+      content_by_lua ' 
+      clientIP = ngx.req.get_headers()["x_forwarded_for"] 
+      ngx.say("Forwarded_IP:",clientIP) 
+      if clientIP == nli then
+           clientIP = ngx.var.remote_addr 
+	   ngx.say("Remote_IP:",clientIP) 
+       end '; 
+       } 
+
+       location / { 
+       default_type 'text/plain'; 
+       content_by_lua_file /usr/servers/nginx/conf/dep.lua; 
+       } 
+       
+       location @java_prod { 
+       proxy_pass http://java_prod; 
+       include proxy_params; 
+       } 
+       
+       location @java_test { 
+       proxy_pass http://java_test; 
+       include proxy_params; 
+       } 
+ }
+
+
+
+
+--获取x-real-ip
+clientIP = ngx.req.get_headers()["X-Real-IP"]
+--如果IP为空-取x_forwarded_for
+if clientIP ==	nil then
+   clientIP = ngx.req.get_headers()["x_forwarded_for"]
+end
+
+--如果IP为空-取remote_addr
+if clientIP ==	nil then
+    clientIP = ngx.var.remote_addr
+end
+--定义本地,加载memcached
+local	memcached = require "resty.memcached"
+--实例化对象
+local	memc, err = memcached:new()
+--判断连接是否存在错误
+   if not memc	then
+	ngx.say("failed	to	instantiate	memc:	",	err)
+	return
+	end
+--建⽴memcache连接
+  local	ok, err	=	memc:connect("127.0.0.1",	11211)
+--⽆法连接往前端抛出错误信息
+ if not	ok	then
+  ngx.say("failed	to	connect:	",	err)
+  return
+  end
+--获取对象中的ip-存在值赋给res
+  local	res,	flags,	err = memc:get(clientIP)
+--
+--ngx.say("value	key:	",res,clientIP)
+  if err then
+   ngx.say("failed to get clientIP ",	err)
+   return
+				end
+--如果值为1则调⽤local-@java_test
+   if	res	==	"1" then
+    ngx.exec("@java_test")
+    return
+    end
+--否则调⽤local-@java_prod
+    ngx.exec("@java_prod")
+    return
+
+
+---------------------------根据请求体
+
+--获取x-real-ip
+clientIP = ngx.req.get_headers()["X-Real-IP"]
+--如果IP为空-取x_forwarded_for
+if clientIP ==	nil then
+   clientIP = ngx.req.get_headers()["x_forwarded_for"]
+end
+
+--如果IP为空-取remote_addr
+if clientIP ==	nil then
+    clientIP = ngx.var.remote_addr
+end
+
+ ngx.say("Forwarded_IP:",clientIP) 
+ 
+
+ ngx.req.read_body()
+ local data = ngx.req.get_body_data()
+   ngx.say(data)
+
+--如果值为1则调⽤local-@java_test
+   if	xxx	==	"1" then
+    ngx.exec("@java_test")
+    return
+    end
+--否则调⽤local-@java_prod
+    ngx.exec("@java_prod")
+    return
