@@ -1,0 +1,121 @@
+1 nginx 的配置文件 nginx.conf
+
+	#后台系统
+        location /qp_mallweb {
+		proxy_pass http://111.112.123.124:8089/mallweb;
+        }
+	#图片路径地址
+        location /qp_mallupload {
+		proxy_pass http://111.112.123.124:8089/mallupload;
+        }
+	#小程序服务端程序
+	location /qp_mallapp {
+                proxy_pass http://111.112.123.124:8091/mallapp;
+        }
+
+
+2 https证书要自己申请，修改 nginx.conf
+	ssl_certificate /usr/local/openresty/nginx/ssl/nginx.crt;
+	ssl_certificate_key /usr/local/openresty/nginx/ssl/nginx.key;
+
+3 tomcat配置文件
+server_mallweb.xml  
+后台
+图片 在服务器先建立个文件夹 比如sucaihuo ，然后把mallupload 放进去
+/home/apps/web/sucaihuo/mallupload
+		<Context docBase="/home/apps/web/mallweb" path="/mallweb" reloadable="true"/>
+		<Context docBase="/home/apps/web/sucaihuo" path="/mallupload" reloadable="true"/>
+
+server_mallapp.xml
+服务端（接口）小程序服务器地址
+
+			<Context docBase="/home/apps/web/mallapp" path="/mallapp" reloadable="true"/>
+
+
+4前端（小程序）
+
+app.js
+    httphost: "https://www.hujiangke.com/qp_mallupload/",
+    httpserver: "https://www.hujiangke.com/qp_mallapp/",
+
+5 后台
+
+后台\mallweb\src\main\resources
+
+service.properties
+
+#项目配置
+################################服务器################################
+#后台地址
+#mall_url=https://www.hujiangke.com/qp_mallweb/
+#图片地址
+#mall_upload_url=https://www.hujiangke.com/qp_mallupload/
+#图片存放路径地址
+#mall_upload_path= /home/apps/web/sucaihuo/
+
+
+################################本地################################
+#后台地址
+mall_url=http://www.hujiangke.com/qp_mallweb/
+#图片地址
+mall_upload_url=http://www.hujiangke.com/qp_mallupload/
+#图片存放路径地址
+mall_upload_path = E:\\xxx\\xxx\\xxx_mallupload\\
+
+################################
+
+
+
+6 项目名称
+
+后台\mallweb\src\main\webapp\admin\config\SYSNAME.txt
+
+
+7 后台+服务端（接口） 日志 
+log4j.properties文件
+log4j.appender.file.File=/home/apps/logs/mallweb.log
+log4j.appender.file.File=/home/apps/logs/mallapp.log
+
+
+8 数据库 mysql
+mall.sql
+
+
+
+
+
+ <Service name="Catalina1">
+    <Connector port="8089"   protocol="HTTP/1.1" maxThreads="700" acceptCount="1
+00" connectionTimeout="20000" redirectPort="8445" URIEncoding="UTF-8"/>
+
+
+    <Engine name="Catalina1" defaultHost="localhost">
+ <Realm className="org.apache.catalina.realm.LockOutRealm">
+   <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+          resourceName="UserDatabase"/>
+ </Realm>
+        <Host name="localhost" appBase="webapps1" >
+        <Context docBase="webapps1/mallweb" path="/mallweb"  reloadable="true" /
+>
+       <Context docBase="/home/apps/web/picfile" path="/mallupload" reloadable="
+true" />
+        </Host>
+        </Engine>
+  </Service>
+
+
+   <Service name="Catalina2">
+    <Connector port="8091"   protocol="HTTP/1.1" maxThreads="700" acceptCount="1
+00" connectionTimeout="20000" redirectPort="8445" URIEncoding="UTF-8"/>
+
+    <Engine name="Catalina2" defaultHost="localhost">
+ <Realm className="org.apache.catalina.realm.LockOutRealm">
+   <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+          resourceName="UserDatabase"/>
+ </Realm>
+        <Host name="localhost" appBase="webapps2">
+        <Context docBase="webapps2/mallapp" path="/mallapp" reloadable="true"/>
+
+        </Host>
+        </Engine>
+  </Service>
